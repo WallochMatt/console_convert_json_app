@@ -6,30 +6,38 @@ import requests
 
 from products_in_api import Product
 
-
-#Like battlefield, holds the request methods
 class App:
     def __init__(self):
-        self.temp = Product
+        pass
 
-
-
+    @staticmethod
     def get_all_products():
-        response = requests.get(f'http://127.0.0.1:8000/api/products/')
-        products = response.json()
-        print("All products:")
-        for product in products:
-            print(f"{product['title']} ID: {product['id']}")
+        try:
+            response = requests.get(f'http://127.0.0.1:8000/api/products/')
+            products = response.json()
+            print("All products:")
+            for product in products:
+                print(f" ID: {product['id']} - {product['title']}")
+        except:
+            print("Something went wrong")
     
-
+    
+    @staticmethod
     def post_product():
         product = {
             'title': str(input("Product title: ")), 
             'description' : str(input("Description: ")),
             'price': float(input('Price: ')),
             'inventory_quantity': int(input('In stock: ')),
-            'image_link': str(input("COPY IF NO IMAGE: https://as2.ftcdn.net/v2/jpg/00/89/55/15/1000_F_89551596_LdHAZRwz3i4EM4J0NHNHy2hEUYDfXc0j.jpg")),
         }
+
+        try:
+            temp = int(input("Do you have an image link? If yes, enter: 1"))
+            if temp == 1:
+                product['image_link'] = str(input('Enter link'))
+        except:
+            pass
+    
 
         response = requests.post('http://127.0.0.1:8000/api/products/', json = product)
         print(response.content)
@@ -43,39 +51,44 @@ In Stock: {new_product['inventory_quantity']}
 Image Link: {new_product['image_link']}""")
 
 
-    
+    @staticmethod
     def get_product(id):
-        response = requests.get(f'http://127.0.0.1:8000/api/products/{str(id)}/')
-        product = response.json()
-        print(f"""Title: {product['title']}
+        try:
+            response = requests.get(f'http://127.0.0.1:8000/api/products/{str(id)}/')
+            product = response.json()
+            print(f"""Title: {product['title']}
 Description: {product['description']}
 Price: ${product['price']}
 In Stock: {product['inventory_quantity']}
 Image Link: {product['image_link']}""")
+        
+        except:
+            print("Something went wrong")
 
 
+    @staticmethod
     def put_product(id):
         product = {
             'title': str(input("Product title: ")), 
             'description' : str(input("Description: ")),
             'price': float(input('Price: ')),
             'inventory_quantity': int(input('In stock: ')),
-            'image_link': str(input("COPY IF NO IMAGE: https://as2.ftcdn.net/v2/jpg/00/89/55/15/1000_F_89551596_LdHAZRwz3i4EM4J0NHNHy2hEUYDfXc0j.jpg")),
         }
+        try:
+            temp = int(input("Do you have an image link? If yes, enter: 1"))
+            if temp == 1:
+                product['image_link'] = str(input('Enter link'))
+        except:
+            pass
+    
+
         response = requests.put(f'http://127.0.0.1:8000/api/products/{str(id)}/', json=product)
         updated_product = response.json()
 
+
+    @staticmethod
     def delete_product(id):
         try:
             requests.delete(f'http://127.0.0.1:8000/api/products/{str(id)}/')
         except:
             print('Error')
-
-
-
-
-
-
-# @staticmethod
-# def product_decoder(product):
-#     return Product(product['title'], product['description'], product['price'], product['inventory_quantity'], product['image_link'])
