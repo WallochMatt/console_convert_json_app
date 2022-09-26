@@ -38,18 +38,20 @@ class App:
         except:
             pass
     
-
-        response = requests.post('http://127.0.0.1:8000/api/products/', json = product)
-        print(response.content)
-        new_product = response.json()
-        
-        print(f"""
+        try:
+            response = requests.post('http://127.0.0.1:8000/api/products/', json = product)
+            print(response.content)
+            new_product = response.json()
+            
+            print(f"""
 Title: {new_product['title']}
 Description: {new_product['description']}
 Price: ${new_product['price']}
 In Stock: {new_product['inventory_quantity']}
 Image Link: {new_product['image_link']}""")
 
+        except:
+            print('An error occured in the request')
 
     @staticmethod
     def get_product(id):
@@ -81,10 +83,13 @@ Image Link: {product['image_link']}""")
         except:
             pass
     
+        try:
+            response = requests.put(f'http://127.0.0.1:8000/api/products/{str(id)}/', json=product)
+            updated_product = response.json()
 
-        response = requests.put(f'http://127.0.0.1:8000/api/products/{str(id)}/', json=product)
-        updated_product = response.json()
-
+        except Exception as StatusError:
+            print("The exception raised is: ", StatusError)
+            
 
     @staticmethod
     def delete_product(id):
