@@ -1,5 +1,5 @@
 #utilizes this API https://github.com/WallochMatt/products_backend_api
 from terminal_app import App
 
-
-run = App.get_product(1)
+#i could set up the ui here or eslewhere to ask what the user wants and send it with inputs where it needs to go
+run = App.get_all_products()

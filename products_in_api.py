@@ -12,6 +12,6 @@ class Product:
 
 
 
-@staticmethod
-def product_decoder(product):
-    return Product(product['title'], product['description'], product['price'], product['inventory_quantitiy'], product['image_link'])
+# @staticmethod
+# def product_decoder(product):
+#     return Product(product['title'], product['description'], product['price'], product['inventory_quantitiy'], product['image_link'])
