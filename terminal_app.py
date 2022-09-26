@@ -65,6 +65,11 @@ Image Link: {product['image_link']}""")
         response = requests.put(f'http://127.0.0.1:8000/api/products/{str(id)}/', json=product)
         updated_product = response.json()
 
+    def delete_product(id):
+        try:
+            requests.delete(f'http://127.0.0.1:8000/api/products/{str(id)}/')
+        except:
+            print('Error')
 
 
 
