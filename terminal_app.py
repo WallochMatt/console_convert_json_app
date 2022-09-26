@@ -21,6 +21,35 @@ class App:
         for product in products:
             print(f"{product['title']} ID: {product['id']}")
     
+
+
+
+
+    def post_product():
+        product = {
+            'title': str(input("Product title: ")), 
+            'description' : str(input("Description: ")),
+            'price': float(input('Price: ')),
+            'inventory_quantity': int(input('In stock: ')),
+            'image_link': str(input("COPY IF NO IMAGE: https://as2.ftcdn.net/v2/jpg/00/89/55/15/1000_F_89551596_LdHAZRwz3i4EM4J0NHNHy2hEUYDfXc0j.jpg")),
+        }
+
+        response = requests.post('http://127.0.0.1:8000/api/products/', json = product)
+        print(response.content)
+        new_product = response.json()
+        
+        print(f"""
+Title: {new_product['title']}
+Description: {new_product['description']}
+Price: ${new_product['price']}
+In Stock: {new_product['inventory_quantity']}
+Image Link: {new_product['image_link']}""")
+
+
+
+
+
+
     
     def get_product(id):
         response = requests.get(f'http://127.0.0.1:8000/api/products/{str(id)}/')
